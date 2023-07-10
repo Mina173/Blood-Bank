@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/faq123.css">
+    <script>
+        var ButtonExpand = function (domNode) {
+
+            this.domNode = domNode;
+
+            this.keyCode = Object.freeze({
+                'RETURN': 13
+            });
+        };
+
+        ButtonExpand.prototype.init = function () {
+
+            this.controlledNode = false;
+
+            var id = this.domNode.getAttribute('aria-controls');
+
+            if (id) {
+                this.controlledNode = document.getElementById(id);
+            }
+
+            this.domNode.setAttribute('aria-expanded', 'false');
+            this.hideContent();
+
+            this.domNode.addEventListener('keydown',    this.handleKeydown.bind(this));
+            this.domNode.addEventListener('click',      this.handleClick.bind(this));
+            this.domNode.addEventListener('focus',      this.handleFocus.bind(this));
+            this.domNode.addEventListener('blur',       this.handleBlur.bind(this));
+
+        };
+
+        ButtonExpand.prototype.showContent = function () {
+
+            if (this.controlledNode) {
+                this.controlledNode.style.display = 'block';
+            }
+
+        };
+
+        ButtonExpand.prototype.hideContent = function () {
+
+            if (this.controlledNode) {
+                this.controlledNode.style.display = 'none';
+            }
+
+        };
+
+        ButtonExpand.prototype.toggleExpand = function () {
+
+            if (this.domNode.getAttribute('aria-expanded') === 'true') {
+                this.domNode.setAttribute('aria-expanded', 'false');
+                this.hideContent();
+            }
+            else {
+                this.domNode.setAttribute('aria-expanded', 'true');
+                this.showContent();
+            }
+
+        };
+
+        /* EVENT HANDLERS */
+
+        ButtonExpand.prototype.handleKeydown = function (event) {
+
+            console.log('[keydown]');
+
+            switch (event.keyCode) {
+
+                case this.keyCode.RETURN:
+
+                    this.toggleExpand();
+
+                    event.stopPropagation();
+                    event.preventDefault();
+                    break;
+
+                default:
+                    break;
+            }
+
+        };
+
+        ButtonExpand.prototype.handleClick = function (event) {
+            this.toggleExpand();
+        };
+
+        ButtonExpand.prototype.handleFocus = function (event) {
+            this.domNode.classList.add('focus');
+        };
+
+        ButtonExpand.prototype.handleBlur = function (event) {
+            this.domNode.classList.remove('focus');
+        };
+
+        /* Initialize Hide/Show Buttons */
+
+        window.addEventListener('load', function (event) {
+
+            var buttons =  document.querySelectorAll('button[aria-expanded][aria-controls]');
+
+            for (var i = 0; i < buttons.length; i++) {
+                var be = new ButtonExpand(buttons[i]);
+                be.init();
+            }
+
+        }, false);
+    </script>
+</head>
+<body>
+<dl class="faq">
+    <dt>
+        <button aria-expanded="false" aria-controls="faq1_desc">
+            Ko sve može dati krv?
+        </button>
+    </dt>
+    <dd>
+        <p id="faq1_desc" class="desc">
+            Davalac krvi može biti svaka zdrava, odrasla osoba, starosti od 18-65 godina kod koje se lekarskim pregledom i proverom krvne slike,
+            odnosno nivoa hemoglobina, utvrdi da davanje krvi neće ugroziti ni nju, niti osobu kojoj bi se ta krv primenila.
+            To znači da je potrebno da se zadovolje sledeći kriterijumi:
+
+            Da je osoba zdrava, dobrog opšteg stanja
+            Teža od 50 kg
+            Telesne temperature manje do 37°C
+            Pulsa između 50 - 100/min
+            Krvnog pritiska: ne višeg od 24/14 kPa i ne nižeg od 13,3/8,66 kPa
+            Nalaz nad plućima i srcem mora biti uredan
+            Ždrelo mora biti bez upale
+            Limfne žlezde vrata i pazuha, jetra i slezina ne smeju biti uvećane
+            Hemoglobin mora biti iznad 135 g/L (Hct = 0.38) za muškarce
+            Hemoglobin mora biti iznad 125 g/L (Hct = 0.4) za žene
+            Interval između davanja krvi je 3 meseca (12 nedelja) za muškarce i 4 meseca (16 nedelja) za žene
+            Davalac krvi u Srbiji ima u proseku 38 godina, stalno je zaposlen i ima porodicu.
+            Većinu dobrovoljnih davalaca krvi čine muškarci (73,5 %),
+            dok su žene zastupljene u manjem procentu(26,5 %), što je uobičajeno i u drugim zemljama.
+
+        </p>
+    </dd>
+    <dt>
+        <button aria-expanded="false" aria-controls="faq2_desc">
+            Kada se ne može dati krv?
+        </button>
+    </dt>
+    <dd>
+        <p id="faq2_desc" class="desc">
+            Selekcija davalaca se vrši prema ustanovljenim, isključivo medicinskim, kriterijumima za
+            privremeno odlaganje davanja krvi ili trajno odbijanje zbog nepodobnosti za davanje krvi,
+            bilo da bi davanje krvi moglo da ugrozi potenicijalnog davaoca ili primaoca. Na izbor davalaca
+            nikako nema uticaja pol, religija, nacionalnost, seksualno opredeljenje, politička orijentisanost,
+            zanimanje, socijalni status ili neki drugi sličan razlog.
+        </p>
+    </dd>
+    <dt>
+        <button aria-expanded="false" aria-controls="faq3_desc">
+            Kako se ponašati posle davanja krvi?
+        </button>
+    </dt>
+    <dd>
+        <p id="faq3_desc" class="desc">
+            Posle davanja krvi zavoj na pregibu lakta ne treba skidati sledeća dva sata.
+            Tog dana treba da se unosi tečnosti nešto više nego uobičajeno (za 3-4 čaše vode).
+            Mogu se obavljati uobičajene aktivnosti. Treba izbegavati teži fizički rad ili
+            vežbe kao što su podizanje tereta, bildovanje, guranje teških predmeta, najmanje 4 sata posle davanja krvi.
+            Izbegavati žurbu, pušenje bar 2 sata, alkohol bar 8 sati, dugotrajno stajanje, pregrejane prostorije.
+            Tog dana ne kretati kao vozač na dug i naporan put niti obavljati rizičan posao (npr.penjanje, rad na skeli i sl.).
+
+        </p>
+    </dd>
+    <dt>
+        <button aria-expanded="false" aria-controls="faq4_desc">
+            Zašto se određuje vrednost hemoglobina pre davanja krvi?
+        </button>
+    </dt>
+    <dd>
+        <p id="faq4_desc" class="desc">
+            Šta je homoglobin?
+            Hemoglobin je crveni krvi pigment koji prenosi kiseonik po organizmu. Nalazi se u crvenim krvnih zrnicima (eritrocitima).
+
+            Hemoglobin test
+            Da biste mogli da date krv nivo hemoglobina mora da bude iznad:
+
+            135 g/L za muškarce
+            125 g/L za žene
+            Zašto nivo hemoglobina može da bude snižen?
+            Neke zdrave osobe imaju prirodno niži nivo hemoglobina u odnosu na nivo potreban za davanje krvi.
+            Zbog sniženog nivoa gvožđa koji je sastavni deo hemoglobina.
+            Određena stanja i oboljenja mogu da izazovu sniženja nivoa hemoglobina u krvi.
+            Ako je nivo hemoglobina nizak, šta dalje?
+            Lekar će da porazgovara sa Vama i posavetovaće Vas.
+
+            Da li ćete moći ubuduće da dajete krvi?
+            Da, ako se otklone uzroci niskog hemoglobina.
+
+            Kako da popravite nivo hemoglobina?
+            Koristite u ishrani namirnice bogate gvožđem.
+
+            Hrana veoma bogata gvožđem:
+            Creveno meso, džigerica, bubrezi, ulje, riba kao što je tunjevina i sardina, cerealije, kakao.
+
+            Hrana koja takođe sadrži gvožđe:
+            Jaja, jezgra koštuničavih plodova (orah, lešnik), integralni hleb, suvo voće, pasulj, sočivo, sveže zeleno povrće.
+
+            VITAMIN C
+            Vitamin C iz svežih namirnica poboljšava iskorišćenost gvožđa.
+
+            Ako danas niste mogli da date krv zbog niže vrednosti hemoglobina, nadamo se da će Vam ovo objašnjenje pomoći da shvatite razlog, kao i kako da popravite nivo hemoglobina.
+        </p>
+    </dd>
+    <dt>
+        <button aria-expanded="false" aria-controls="faq5_desc">
+            Ostala najčešće postavljana pitanja.
+        </button>
+    </dt>
+    <dd>
+         <p id="faq5_desc" class="desc">
+           <br>Da li davanje krvi stvara naviku? NE
+           Ne stvara se navika u smislu zavisnosti. Osećaj zadovoljstva zbog pripadnosti i korisnosti društvu, čini da se formira populacija redovnih DDK.
+<br>
+            <br>Da li se davanjem krvi može dobiti neka zarazna bolest? NE
+            Pribor za uzimanje krvi je sterilan i za jednokratnu upotrebu.
+<br>
+            <br>Da li je davanje krvi bolno? NE
+            Sam ubod igle se oseti, ali se ne može proglasiti bolom. Samo davanje krvi koje traje 5-10 minuta nije bolno.
+<br>
+            <br>Za koje vreme se nadoknadi darovana krv i šta se dešava u organizmu posle davanja krvi?
+            Organizam vrlo brzo nadoknadi izgubljenu količinu krvi. Za 48 sati se nadoknadi plazma, leukociti za par sati u toku dana, za 3-5 dana trombociti, za 4 nedelje eritrociti, a za oko 8 nedelja i sadržaj gvožđa u eritrocitima
+
+            Nivo hemoglobin se smanji za oko 10g/L. Sa adekvatnom ishranom, vrednost hemoglobina se vrati na pređašnju vrednost za oko 8 nedelja.
+<br>
+            <br>Da li se mogu javiti neželjene reakcije u toku davanja krvi? Retko i nisu za brigu.
+            Davanje krvi je apsolutno bezbedno za davaoca jer svaka zdrava osoba ima rezervu krvi koja nije neophodna za normalno funkcionisanje organizma i obavljanje svakodnevnih aktivnosti. Količina darovane jedinice krvi predstavlja samo deo rezerve krvi (oko 10%) koja ne može da ugrozi zdravlje niti umanji sposobnost za normalne životne aktivnosti davaoca.
+
+            Veoma retko se mogu javiti neželjene reakcije od kojih je vredno pomenuti pojavu modrica ili osećaj slabosti.
+
+        </p>
+    </dd>
+</dl>
+</body>
+</html>

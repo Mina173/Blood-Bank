@@ -1,0 +1,25 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 70%;
+	margin-left: auto;
+  margin-right: auto;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+	
+
+}
+
+tr:nth-child(even) {
+    background-color: white;
+}
+
+body {
+	background-image:url("https://media.mehrnews.com/d/2018/12/01/4/2971635.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+}
